@@ -1,0 +1,20 @@
+Oct 20 19:30:24 dynhost: Current IP is 90.20.115.133
+Oct 20 19:30:24 dynhost: No old IP detected
+Oct 20 19:30:24 dynhost: Updating dns record
+Oct 20 19:30:25 dynhost: Update A record KO [90.20.115.133]
+Oct 20 19:32:04 dynhost: Current IP is 90.20.115.133
+Oct 20 19:32:04 dynhost: No old IP detected
+Oct 20 19:32:04 dynhost: Updating dns record
+Oct 20 19:32:05 dynhost: Update A record KO [90.20.115.133]
+Oct 20 19:33:12 dynhost: Current IP is 90.20.115.133
+Oct 20 19:33:12 dynhost: No old IP detected
+Oct 20 19:33:12 dynhost: Updating dns record
+Oct 20 19:33:13 dynhost: Update A record KO [90.20.115.133]
+Oct 20 19:34:08 dynhost: Current IP is 90.20.115.133
+Oct 20 19:34:08 dynhost: No old IP detected
+Oct 20 19:34:08 dynhost: Updating dns record
+Oct 20 19:34:09 dynhost: Update A record OK [90.20.115.133]
+Oct 20 19:34:22 dynhost: Current IP is 90.20.115.133
+Oct 20 19:36:36 dynhost: Current IP is 90.20.115.133
+Oct 20 20:01:42 dynhost: Current IP is 90.20.115.133
+Oct 20 20:02:37 dynhost: Current IP is 90.20.115.133

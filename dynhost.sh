@@ -1,24 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
 BASENAME="`basename -s ".sh" $0`"
 OLD_IP=""
 CURRENT_IP=""
 TEST_DNS="8.8.8.8"
 
-IP_PATH="/var/tmp/ip.external"
-LOG_PATH="/var/tmp/$BASENAME.log"
+IP_PATH="/home/jarvis/DynHost/wan.ip"
+LOG_DIR="/tmp/$BASENAME"
+LOG_PATH="$LOG_DIR/$BASENAME.log"
 
-# Get your API key from https://developer.godaddy.com
-API_KEY="your_api_key_here"
-API_SECRET="your_api_secret_here"
-DOMAIN="your_domain_here"
-
-# Update A record
-RECORD_TYPE="A"
-# For an A-Record, the record name is equivalent to DOMAIN
-# but for a TXT-Record, the record name is the key of TXT-Record
-RECORD_NAME=$DOMAIN
-
+# Get your API key from OVH Account
+API_LOGIN="your_api_login_here"
+API_PASSWORD="your_api_password_here"
+DYNHOST_DOMAIN="dynhost.domain.xyz"
 
 # To log in formatted style every log message
 log_message ()
@@ -50,7 +44,7 @@ get_wan_ip ()
     CURRENT_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
     if [ $? -eq 0 ]
     then
-      log_message "Current IP is $CURRENT_IP"
+      #log_message "Current IP is $CURRENT_IP"
       ret=0
     else
       log_message "Unable to get external IP"
@@ -61,19 +55,15 @@ get_wan_ip ()
   return $ret
 }
 
-# To update A record on GoDaddyDNS
+# To update DynHost
 update_a_record ()
 {
   local ret=1
   log_message "Updating dns record"
   # Update the previous record
-  local JSON_RESPONSE=$(curl -s -X PUT \
-  -H "Authorization: sso-key $API_KEY:$API_SECRET" \
-  -H "Content-Type: application/json" \
-  -d "[{\"data\": \"$CURRENT_IP\", \"ttl\": 600}]" \
-  "https://api.godaddy.com/v1/domains/$DOMAIN/records/$RECORD_TYPE/$RECORD_NAME")
+  curl --user "$API_LOGIN:$API_PASSWORD" "https://www.ovh.com/nic/update?system=dyndns&hostname=$DYNHOST_DOMAIN&myip=$CURRENT_IP"
 
-  if [ $JSON_RESPONSE == "{}" ]
+  if [ $? -eq 0 ]
   then
     echo $CURRENT_IP > $IP_PATH
     ret=0
@@ -88,6 +78,12 @@ update_a_record ()
 main()
 {
   local ret=1
+  # Create log dir if it isn't exist
+  if [ ! -d "$LOG_DIR" ]
+  then
+    mkdir -p "$LOG_DIR"
+    log_message "Creating log directory"
+  fi
   if get_wan_ip
   then
     if ! load_old_ip
@@ -104,7 +100,7 @@ main()
       fi
     fi
   fi
-  exit $ret
+  exit "$ret"
 }
 
 main
