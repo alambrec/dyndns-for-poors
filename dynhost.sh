@@ -5,7 +5,7 @@ OLD_IP=""
 CURRENT_IP=""
 TEST_DNS="8.8.8.8"
 
-IP_PATH="/home/jarvis/DynHost/wan.ip"
+IP_PATH="/path/to/wan.ip"
 LOG_DIR="/tmp/$BASENAME"
 LOG_PATH="$LOG_DIR/$BASENAME.log"
 
